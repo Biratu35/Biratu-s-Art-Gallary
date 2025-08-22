@@ -2,16 +2,333 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Biratu's Art Gallery</title>
+  
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-  <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-/>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
+  <style>
+    /* Base Styles */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f7f6; /* A slightly softer background */
+      color: #333;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-top: 4rem;
+        margin-bottom: 2rem;
+        color: #222;
+    }
+
+    /* Header */
+    header {
+      background: #ffffff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav.container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+    
+    nav h1 {
+        font-size: 1.5rem;
+        margin: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      transition: color 0.3s, background-color 0.3s;
+      border-radius: 5px;
+    }
+
+    .nav-links a:hover {
+      background-color: #f0f0f0;
+      color: #0077cc;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* ====================================================== */
+    /* NEW HERO SECTION STYLES                              */
+    /* ====================================================== */
+    .hero-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 85vh; /* Makes the section tall */
+      padding: 4rem 2rem;
+      color: #ffffff; /* Sets text color to white */
+      position: relative;
+      overflow: hidden;
+      
+      /* --- KEY CHANGE: Background Image --- */
+      /* Replace this URL with your desired high-quality hero image */
+      background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2019-02-15_14-43-44.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      z-index: 2; /* Ensures content is above the overlay */
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-title {
+      font-size: 3.5rem; /* Larger font for the main title */
+      font-weight: 600;
+      margin: 0;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Adds shadow for readability */
+    }
+
+    .hero-tagline {
+      font-size: 1.4rem;
+      margin: 1rem 0 2rem 0;
+      font-weight: 400;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background-color: #00bcd4; /* A nice cyan color */
+      color: #ffffff;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 5px;
+      border: 2px solid #00bcd4;
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+
+    .hero-cta:hover {
+      background-color: transparent; /* Makes background transparent on hover */
+      color: #00bcd4; /* Changes text color to cyan */
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* Gallery Section */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .art-item {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .art-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .art-item img {
+      width: 100%;
+      height: 250px; /* Gives images a uniform height */
+      object-fit: cover; /* Ensures images cover the area without distortion */
+      display: block;
+    }
+
+    .art-item h3 {
+      padding: 1rem;
+      margin: 0;
+      font-weight: 600;
+      text-align: center;
+      color: #0077aa;
+    }
+    
+    /* Contact Section */
+    #contact {
+      padding-bottom: 4rem;
+    }
+    
+    #contact p {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto 2rem auto;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    input, textarea {
+      padding: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    button[type="submit"] {
+      background-color: #0077cc;
+      color: white;
+      padding: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #005fa3;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #222;
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    footer p {
+      margin: 0 0 1rem;
+      font-weight: 500;
+    }
+
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .footer-social a {
+      color: #aaa;
+      font-size: 1.5rem;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .footer-social a:hover,
+    .footer-social a:focus {
+      color: #00bcd4; /* Use a highlight color */
+      transform: scale(1.2);
+    }
+    
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      h2 {
+        font-size: 2rem;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+      
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        flex-direction: column;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-links li {
+        padding: 0.5rem 0;
+      }
+      
+      .nav-links a {
+        display: block;
+        padding: 1rem;
+      }
+      
+      .nav-links a:hover {
+        background-color: #f0f8ff;
+      }
+      
+      .hero-title {
+        font-size: 2.8rem;
+      }
+      .hero-tagline {
+        font-size: 1.2rem;
+      }
+      .hero-section {
+        min-height: 70vh;
+      }
+    }
+    
+  </style>
 </head>
+
 <body>
   <header>
     <nav class="container">
@@ -25,137 +342,84 @@
     </nav>
   </header>
 
-  <section id="hero" class="container hero-section" data-aos="fade-up">
-  <div class="hero-content">
-    <div class="hero-text">
-      <h2>Welcome to My World of Art</h2>
-      <p>Explore my creative works — a blend of colors, form, and imagination.</p>
+  <section id="hero" class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Biratu's Art Gallery</h1>
+      <p class="hero-tagline">Where Art Meets Emotion</p>
+      <a href="#gallery" class="hero-cta">View Collection</a>
     </div>
-    <div class="hero-graphic">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/Image%20Jun%2030%2C%202025%2C%2003_31_55%20AM.png" alt="Art Graphic" />
-    </div>
-  </div>
-  <div class="floating-shapes">
-    <span></span><span></span><span></span>
-  </div>
-</section>
+  </section>
 
-
-
-  <section id="gallery" class="container"> 
-  <h2>Gallery</h2>
-  <div class="gallery-grid">
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2019-02-15_14-43-44.jpg" alt="Artwork 1">
-      <h3>Abstract Emotions</h3>
+  <section id="gallery" class="container">
+    <h2>Gallery</h2>
+    <div class="gallery-grid">
+      <div class="art-item">
+        <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2019-02-15_14-43-44.jpg" alt="Abstract Emotions">
+        <h3>Abstract Emotions</h3>
+      </div>
+      <div class="art-item">
+        <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2019-02-27_21-35-08.jpg" alt="Artwork">
+        <h3>Serenity in Blue</h3>
+      </div>
+      <div class="art-item">
+        <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2020-03-01_16-10-21.jpg" alt="Artwork">
+        <h3>Golden Chaos</h3>
+      </div>
+      <div class="art-item">
+        <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2020-03-11_08-50-21.jpg" alt="Artwork">
+        <h3>Crimson Flow</h3>
+      </div>
+      <div class="art-item">
+        <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2020-04-15_18-29-03.jpg" alt="Artwork">
+        <h3>Urban Lines</h3>
+      </div>
+      <div class="art-item">
+        <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2020-08-30_16-02-16.jpg" alt="Artwork">
+        <h3>Pastel Dreams</h3>
+      </div>
+      <div class="art-item">
+        <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2020-10-01_15-49-34.jpg" alt="Artwork">
+        <h3>Nature's Texture</h3>
+      </div>
+      <div class="art-item">
+        <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2021-12-12_10-26-38.jpg" alt="Artwork">
+        <h3>Digital Bloom</h3>
+      </div>
+      <div class="art-item">
+        <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2019-04-08_14-47-31.jpg" alt="Sketch of Light">
+        <h3>Sketch of Light</h3>
+      </div>
     </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2019-02-27_21-35-08.jpg" alt="Artwork 2">
-      <h3>Serenity in Blue</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2020-03-01_16-10-21.jpg" alt="Artwork 2">
-      <h3>Serenity in Blue</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2020-03-11_08-50-21.jpg" alt="Artwork 2">
-      <h3>Serenity in Blue</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2020-04-15_18-29-03.jpg" alt="Artwork 2">
-      <h3>Serenity in Blue</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2020-08-30_16-02-16.jpg" alt="Artwork 2">
-      <h3>Serenity in Blue</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2020-10-01_15-49-34.jpg" alt="Artwork 2">
-      <h3>Serenity in Blue</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2021-12-12_10-26-38.jpg" alt="Artwork 2">
-      <h3>Serenity in Blue</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2021-12-16_09-05-39.jpg" alt="Artwork 2">
-      <h3>Serenity in Blue</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2022-09-29_12-28-22.jpg" alt="Artwork 2">
-      <h3>Serenity in Blue</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2022-09-29_12-28-22.jpg" alt="Artwork 2">
-      <h3>Serenity in Blue</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2022-09-29_12-28-22.jpg" alt="Artwork 2">
-      <h3>Serenity in Blue</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2018-07-30_14-15-26.jpg" alt="Artwork 2">
-      <h3>Serenity in Blue</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2018-07-17_09-09-04.jpg" alt="Artwork 2">
-      <h3>Serenity in Blue</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2018-06-04_03-58-40.jpg" alt="Artwork 2">
-      <h3>Serenity in Blue</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2018-04-16_20-20-50.jpg" alt="Artwork 2">
-      <h3>Serenity in Blue</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2023-01-04_09-03-03.jpg" alt="Artwork 2">
-      <h3>Serenity in Blue</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2019-04-08_14-47-31.jpg" alt="Artwork 3">
-      <h3>Sketch of Light</h3>
-    </div>
-    <div class="art-item">
-      <img src="https://raw.githubusercontent.com/Biratu35/Biratu-s-Art-Gallary/refs/heads/main/photo_2020-02-13_20-47-46.jpg" alt="Artwork 4">
-      <h3>Modern Visions</h3>
-    </div
-      
-  </div>
-</section>
-
+  </section>
 
   <section id="contact" class="container">
     <h2>Contact Me</h2>
-    <p>If you're interested in my work or want to collaborate, feel free to reach out.</p>
+    <p>If you're interested in my work, have a question, or want to collaborate, please feel free to reach out. I'd love to hear from you!</p>
     <form action="https://formsubmit.co/lemessabiratu@gmail.com" method="POST">
-  <input type="text" name="name" placeholder="Your Name" required>
-  <input type="email" name="email" placeholder="Your Email" required>
-  <textarea name="message" placeholder="Your Message" required></textarea>
-  <button type="submit">Send Message</button>
-</form>
-
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
   </section>
 
   <footer>
-  <p>&copy; 2025 Biratu Lemessa. All rights reserved.</p>
-  <div class="footer-social">
-    <a href="https://www.linkedin.com/in/biratu-lemessa-15a4b4294" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-      <i class="fab fa-linkedin"></i>
-    </a>
-    <a href="https://t.me/Bira35" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
-      <i class="fab fa-telegram"></i>
-    </a>
-    <a href="https://wa.me/+251935728212" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-      <i class="fab fa-whatsapp"></i>
-    </a>
-    <a href="https://mail.google.com/mail/?view=cm&to=lemessabiratu@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email">
-      <i class="fas fa-envelope"></i>
-    </a>
-  </div>
-</footer>
-
+    <p>&copy; 2025 Biratu Lemessa. All rights reserved.</p>
+    <div class="footer-social">
+      <a href="https://www.linkedin.com/in/biratu-lemessa-15a4b4294" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://t.me/Bira35" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+        <i class="fab fa-telegram"></i>
+      </a>
+      <a href="https://wa.me/+251935728212" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+      <a href="https://mail.google.com/mail/?view=cm&to=lemessabiratu@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </div>
+  </footer>
 
   <script>
     function toggleMenu() {
